@@ -1,5 +1,5 @@
-#ifndef NAZWAPLIKU_H
-#define NAZWAPLIKU_H
+#ifndef UTILS_H
+#define UTILS_H
 #include <iostream>
 #include <sstream>
 #include <algorithm>
