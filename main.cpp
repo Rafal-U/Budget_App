@@ -1,14 +1,12 @@
 #include <iostream>
 #include "BudgetApp.h"
-#include "UserManager.h"
 using namespace std;
 
 int main()
 {
-    BudgetApp budgetApp;
-    UserManager obiekt;
-
+    BudgetApp budgetApp("Users.xml"/*, "Incomes.xml", "Expenses.xml*/);
     char mainChoice;
+
     while(true)
     {
         mainChoice = budgetApp.selectMainMenuOption();
@@ -17,7 +15,8 @@ int main()
             case '1': budgetApp.registerUser(); break;
             case '2':
                 //budgetApp.logInUser();
-                budgetApp.manageUserOptions();
+                //budgetApp.manageUserOptions();
+                budgetApp.showUsers();
                 break;
             case '3': exit(0); break;
             default: cout << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);
