@@ -42,6 +42,12 @@ void BudgetApp::registerUser()
     userManager.registerUser();
 }
 
+
+void BudgetApp::logInUser()
+{
+    userManager.signInUser();
+}
+
 void BudgetApp::showUsers()
 {
     userManager.showUsers(); system("pause");

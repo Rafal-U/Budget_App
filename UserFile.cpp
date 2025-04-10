@@ -19,3 +19,32 @@ void UserFile::addUserToFile(User user)
 
     xmlDoc.Save("Users.xml");
 }
+
+
+vector<User> UserFile::loadUsersFromFile()
+{
+    vector<User> allUsers;
+    User singleUser;
+    if(fileExist("Users.xml"))
+    {
+        xmlDoc.FindElem("USERS");
+        xmlDoc.IntoElem();
+        while(xmlDoc.FindElem("User"))
+        {
+            xmlDoc.IntoElem();
+            xmlDoc.FindElem("ID");
+            singleUser.userId = Utils::convertStringToInteger(xmlDoc.GetData());
+            xmlDoc.FindElem("Login");
+            singleUser.login = xmlDoc.GetData();
+            xmlDoc.FindElem("Password");
+            singleUser.password = xmlDoc.GetData();
+            xmlDoc.FindElem("Name");
+            singleUser.name = xmlDoc.GetData();
+            xmlDoc.FindElem("Surname");
+            singleUser.surname = xmlDoc.GetData();
+            xmlDoc.OutOfElem();
+            allUsers.push_back(singleUser);
+        }
+    }
+    return allUsers;
+}

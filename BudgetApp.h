@@ -28,7 +28,7 @@ public:
      };*/
     char selectMainMenuOption();
     void registerUser();
-    //void logInUser();
+    void logInUser();
     void manageUserOptions();
 
     void showUsers();

@@ -25,11 +25,11 @@ public:
     UserManager(string USER_FILE_NAME) : userFile(USER_FILE_NAME)
     {
         loggedInUserId = 0;
-        //users = userFile.loadUsersFromFile();
+        users = userFile.loadUsersFromFile();
     };
     char selectUserMenuOption();
     void registerUser();
-    //void signInUser();
+    void signInUser();
     //void changePasswordOfLoggedInUser();
     //bool isUserLoggedIn();
     //void signOutUser();

@@ -220,6 +220,48 @@ bool UserManager::isNewUserGood(User user)
 }
 
 
+void UserManager::signInUser()
+{
+    system("cls");
+    User user;
+    string triedLogin = "", triedPassword = "";
+
+    cout << "Aby anulowac logogwanie i wrocic do menu glownego wcisnij 0" << endl << endl;
+    cout << endl << "Podaj login: ";
+    triedLogin = Utils::loadLine();
+    if (triedLogin == "0") {return;}
+
+    vector <User>::iterator itr = users.begin();
+    while (itr != users.end())
+    {
+        if (itr -> login == triedLogin)
+        {
+            for (int tries = 3; tries > 0; tries--)
+            {
+                cout << "Podaj haslo. Pozostalo prob: " << tries << ": ";
+                triedPassword = Utils::loadLine();
+                if (triedPassword == "0") {return;}
+
+                if (itr -> password == triedPassword)
+                {
+                    loggedInUserId = itr -> userId;
+                    cout << endl << "Zalogowales sie." << endl << endl;
+                    system("pause");
+                    return;
+                }
+            }
+            cout << "Wprowadzono 3 razy bledne haslo. Nastapi przekierowanie do menu glownego." << endl;
+            Sleep(3000);
+            return;
+        }
+        itr++;
+    }
+    cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
+    system("pause");
+    return;
+}
+
+
 void UserManager::showUsers()
 {
     for (size_t i = 0; i < users.size(); i++)

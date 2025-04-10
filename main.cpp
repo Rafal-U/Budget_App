@@ -14,9 +14,9 @@ int main()
         {
             case '1': budgetApp.registerUser(); break;
             case '2':
-                //budgetApp.logInUser();
+                budgetApp.logInUser();
                 //budgetApp.manageUserOptions();
-                budgetApp.showUsers();
+                system("cls"); budgetApp.showUsers();
                 break;
             case '3': exit(0); break;
             default: cout << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);
