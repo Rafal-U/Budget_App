@@ -206,7 +206,7 @@ int UserManager::getNewUserID()
     if (users.empty() == true)
         return 1;
     else
-        return users.back().userId + 1;
+        return userFile.getLastId() + 1;
 }
 
 
@@ -226,7 +226,7 @@ void UserManager::signInUser()
     User user;
     string triedLogin = "", triedPassword = "";
 
-    cout << "Aby anulowac logogwanie i wrocic do menu glownego wcisnij 0" << endl << endl;
+    cout << "Aby anulowac logowanie i wrocic do menu glownego wcisnij 0" << endl << endl;
     cout << endl << "Podaj login: ";
     triedLogin = Utils::loadLine();
     if (triedLogin == "0") {return;}
@@ -259,6 +259,60 @@ void UserManager::signInUser()
     cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
     system("pause");
     return;
+}
+
+
+bool UserManager::isUserLoggedIn()
+{
+    if(loggedInUserId > 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+void UserManager::signOutUser()
+{
+    loggedInUserId = 0;
+}
+
+
+void UserManager::changePasswordOfLoggedInUser()
+{
+    string newPassword = "";
+    char confirmation;
+    do
+    {
+        system("cls");
+        cout << "Aby anulowac i wrocic do menu glownego wcisnij: 0" << endl;
+        cout << "Haslo musi zawierac co najmniej 6 znakow w tym:" << endl;
+        cout << "2 cyfry" << endl << "2 duze i male litery" << endl << "brak spacji" << endl << endl;
+        cout << "Podaj haslo: " << endl;
+        newPassword = Utils::loadLine();
+        if(newPassword == "0") {return;}
+    }
+    while (!isPasswordGood(newPassword));
+
+    for(int i = 0; i < users.size(); i++)
+    {
+        if(users[i].userId == loggedInUserId)
+        {
+            cout << "Czy na pewno chesz zmienic haslo?" << endl;
+            cout << "Aby potwierdzic haslo wcisnij t lub T i potwierdz, aby wyjsc wybierz dowolny inny znak i potwierdz." << endl;
+            confirmation = Utils::loadChar();
+            if(confirmation == 't' || confirmation == 'T')
+            {
+                cout << "Pomyslnie zmieniono haslo. Nastapi powrot do menu uzytkownika." << endl;
+                users[i].password = newPassword; Sleep(3000);
+                userFile.changePasswortInFile(loggedInUserId, newPassword);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
 }
 
 

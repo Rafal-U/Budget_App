@@ -10,8 +10,8 @@ void UserFile::addUserToFile(User user)
     xmlDoc.FindElem();
     xmlDoc.IntoElem();
     xmlDoc.AddElem("User");
+    xmlDoc.AddAttrib("ID", user.userId);
     xmlDoc.IntoElem();
-    xmlDoc.AddElem("ID", user.userId);
     xmlDoc.AddElem("Login", user.login);
     xmlDoc.AddElem("Password", user.password);
     xmlDoc.AddElem("Name", user.name);
@@ -31,9 +31,8 @@ vector<User> UserFile::loadUsersFromFile()
         xmlDoc.IntoElem();
         while(xmlDoc.FindElem("User"))
         {
+            singleUser.userId = Utils::convertStringToInteger(xmlDoc.GetAttrib("ID"));
             xmlDoc.IntoElem();
-            xmlDoc.FindElem("ID");
-            singleUser.userId = Utils::convertStringToInteger(xmlDoc.GetData());
             xmlDoc.FindElem("Login");
             singleUser.login = xmlDoc.GetData();
             xmlDoc.FindElem("Password");
@@ -47,4 +46,48 @@ vector<User> UserFile::loadUsersFromFile()
         }
     }
     return allUsers;
+}
+
+
+void UserFile::changePasswortInFile(int id, string newPassword)
+{
+    if(fileExist("Users.xml"))
+    {
+        xmlDoc.FindElem("USERS");
+        xmlDoc.IntoElem();
+        while(xmlDoc.FindElem("User"))
+        {
+            if(Utils::convertStringToInteger(xmlDoc.GetAttrib("ID")) == id)
+            {
+                xmlDoc.IntoElem();
+                if(xmlDoc.FindElem("Password"))
+                {
+                    xmlDoc.SetData(newPassword);
+                }
+                xmlDoc.OutOfElem(); break;
+            }
+        }
+        xmlDoc.Save("Users.xml");
+    }
+}
+
+
+int File::getLastId()
+{
+    int currentID = 0, lastId = 0;
+
+    if(fileExist("Users.xml"))
+    {
+        xmlDoc.FindElem("USERS");
+        xmlDoc.IntoElem();
+        while(xmlDoc.FindElem("User"))
+        {
+            currentID = Utils::convertStringToInteger(xmlDoc.GetAttrib("ID"));
+            if(currentID > lastId)
+            {
+                lastId = currentID;
+            }
+        }
+    }
+    return lastId;
 }

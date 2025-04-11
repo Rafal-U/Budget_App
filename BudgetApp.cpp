@@ -18,7 +18,7 @@ char BudgetApp::selectMainMenuOption()
 
 void BudgetApp::manageUserOptions()
 {
-    while(true)
+    while(userManager.isUserLoggedIn())
     {
         char choice;
         choice = userManager.selectUserMenuOption();
@@ -29,8 +29,8 @@ void BudgetApp::manageUserOptions()
             case '3': ; break;
             case '4': ; break;
             case '5': ; break;
-            case '6': ; break;
-            case '7': ; break;
+            case '6': userManager.changePasswordOfLoggedInUser(); break;
+            case '7': userManager.signOutUser(); break;
             default: cout << endl << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);
         }
     }

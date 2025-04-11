@@ -11,7 +11,6 @@ class File
 
 protected:
     File(string fileName) : FILE_NAME(fileName) {};
-    int lastId;
     string getFileName();
     CMarkup xmlDoc;
 

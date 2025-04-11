@@ -30,9 +30,9 @@ public:
     char selectUserMenuOption();
     void registerUser();
     void signInUser();
-    //void changePasswordOfLoggedInUser();
-    //bool isUserLoggedIn();
-    //void signOutUser();
+    void changePasswordOfLoggedInUser();
+    bool isUserLoggedIn();
+    void signOutUser();
 
     void showUsers();
 };
