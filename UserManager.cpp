@@ -36,7 +36,7 @@ void UserManager::registerUser()
         if(confirm == 't' || confirm == 'T')
         {
             users.push_back(singleUser);
-            //plikZUzytkownikami.dopiszUzytkownikaDoPliku(uzytkownik);
+            userFile.addUserToFile(singleUser);
             cout << endl << "Konto zalozono pomyslnie. Nastapi przekierowanie do menu glownego" << endl; Sleep(2000);
         }
         else
@@ -206,7 +206,7 @@ int UserManager::getNewUserID()
     if (users.empty() == true)
         return 1;
     else
-        return users.back().userId + 1;
+        return userFile.getLastId() + 1;
 }
 
 
@@ -217,4 +217,109 @@ bool UserManager::isNewUserGood(User user)
         return false;
     }
     return true;
+}
+
+
+void UserManager::signInUser()
+{
+    system("cls");
+    User user;
+    string triedLogin = "", triedPassword = "";
+
+    cout << "Aby anulowac logowanie i wrocic do menu glownego wcisnij 0" << endl << endl;
+    cout << endl << "Podaj login: ";
+    triedLogin = Utils::loadLine();
+    if (triedLogin == "0") {return;}
+
+    vector <User>::iterator itr = users.begin();
+    while (itr != users.end())
+    {
+        if (itr -> login == triedLogin)
+        {
+            for (int tries = 3; tries > 0; tries--)
+            {
+                cout << "Podaj haslo. Pozostalo prob: " << tries << ": ";
+                triedPassword = Utils::loadLine();
+                if (triedPassword == "0") {return;}
+
+                if (itr -> password == triedPassword)
+                {
+                    loggedInUserId = itr -> userId;
+                    cout << endl << "Zalogowales sie." << endl << endl;
+                    system("pause");
+                    return;
+                }
+            }
+            cout << "Wprowadzono 3 razy bledne haslo. Nastapi przekierowanie do menu glownego." << endl;
+            Sleep(3000);
+            return;
+        }
+        itr++;
+    }
+    cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
+    system("pause");
+    return;
+}
+
+
+bool UserManager::isUserLoggedIn()
+{
+    if(loggedInUserId > 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+void UserManager::signOutUser()
+{
+    loggedInUserId = 0;
+}
+
+
+void UserManager::changePasswordOfLoggedInUser()
+{
+    string newPassword = "";
+    char confirmation;
+    do
+    {
+        system("cls");
+        cout << "Aby anulowac i wrocic do menu glownego wcisnij: 0" << endl;
+        cout << "Haslo musi zawierac co najmniej 6 znakow w tym:" << endl;
+        cout << "2 cyfry" << endl << "2 duze i male litery" << endl << "brak spacji" << endl << endl;
+        cout << "Podaj haslo: " << endl;
+        newPassword = Utils::loadLine();
+        if(newPassword == "0") {return;}
+    }
+    while (!isPasswordGood(newPassword));
+
+    for(int i = 0; i < users.size(); i++)
+    {
+        if(users[i].userId == loggedInUserId)
+        {
+            cout << "Czy na pewno chesz zmienic haslo?" << endl;
+            cout << "Aby potwierdzic haslo wcisnij t lub T i potwierdz, aby wyjsc wybierz dowolny inny znak i potwierdz." << endl;
+            confirmation = Utils::loadChar();
+            if(confirmation == 't' || confirmation == 'T')
+            {
+                cout << "Pomyslnie zmieniono haslo. Nastapi powrot do menu uzytkownika." << endl;
+                users[i].password = newPassword; Sleep(3000);
+                userFile.changePasswortInFile(loggedInUserId, newPassword);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+}
+
+
+void UserManager::showUsers()
+{
+    for (size_t i = 0; i < users.size(); i++)
+    {
+        cout << users[i].userId << endl << users[i].login << endl << users[i].password << endl << users[i].name << endl << users[i].surname << endl << endl;
+    }
 }
