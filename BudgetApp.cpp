@@ -24,11 +24,11 @@ void BudgetApp::manageUserOptions()
         choice = userManager.selectUserMenuOption();
         switch(choice)
         {
-            case '1': ; break;
-            case '2': ; break;
+            case '1': budgetManager ->addOperation(INCOME); break;
+            case '2': budgetManager ->addOperation(EXPENSE); break;
             case '3': ; break;
             case '4': ; break;
-            case '5': ; break;
+            case '5': budgetManager ->showVector(); break; //DO ZMIANY
             case '6': userManager.changePasswordOfLoggedInUser(); break;
             case '7': userManager.signOutUser(); break;
             default: cout << endl << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);
@@ -46,6 +46,10 @@ void BudgetApp::registerUser()
 void BudgetApp::logInUser()
 {
     userManager.signInUser();
+    if(userManager.isUserLoggedIn())
+    {
+        budgetManager = new BudgetManager(/*string incomeFileName, string expenseFileName,*/ userManager.getLoggedInUserId());
+    }
 }
 
 void BudgetApp::showUsers()

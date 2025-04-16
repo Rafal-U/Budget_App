@@ -1,5 +1,11 @@
 #include "UserManager.h"
 
+int UserManager::getLoggedInUserId()
+{
+    return loggedInUserId;
+}
+
+
 char UserManager::selectUserMenuOption()
 {
     char option;

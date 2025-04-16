@@ -15,7 +15,6 @@ class DateMethods
     static bool isIntegerDateGood(int dateValue);
     static bool isSingleDateGood(Date singleDate);
     static bool isTimePeriodGood(int startDate, int endDate);
-    static int convertStructDateToIntegerDate(Date date);
 
 public:
     static Date getCurrentLokalDateFromSystem();
@@ -23,6 +22,7 @@ public:
     static bool findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate);
     static bool findLastMonthDates(int checkDate);
     static bool findThisMonthDates(int checkDate);
+    static int convertStructDateToIntegerDate(Date date);
 };
 
 #endif

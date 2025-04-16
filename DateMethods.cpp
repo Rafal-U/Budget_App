@@ -35,8 +35,8 @@ int DateMethods::getDaysInAMonth(int month, int year)
 
 bool DateMethods::isSingleDateGood(Date singleDate)
 {
-    if(singleDate.year < 2000
-       || singleDate.month > 12 || singleDate.month < 1
+    if(singleDate.year < 2000 || singleDate.year > getCurrentLokalDateFromSystem().year
+       || singleDate.month > 12 || singleDate.month < 1 || singleDate.month > getCurrentLokalDateFromSystem().month
        || singleDate.day < 1 || singleDate.day > getDaysInAMonth(singleDate.month, singleDate.year))
     {
         return false;

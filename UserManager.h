@@ -27,6 +27,7 @@ public:
         loggedInUserId = 0;
         users = userFile.loadUsersFromFile();
     };
+    int getLoggedInUserId();
     char selectUserMenuOption();
     void registerUser();
     void signInUser();

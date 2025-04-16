@@ -10,7 +10,7 @@ using namespace std;
 class BudgetApp
 {
     UserManager userManager;
-    //BudgetManager *budgetManager;
+    BudgetManager *budgetManager;
     const string INCOMES_FILE_NAME;
     const string EXPENSES_FILE_NAME;
 
@@ -18,14 +18,15 @@ public:
     BudgetApp(string userFileName/*, string incomeFileName, string expenseFileName*/)
     : userManager(userFileName)//, INCOMES_FILE_NAME(incomesFileName), EXPENSES_FILE_NAME(expensesFileName)
     {
-        //budgetManager = NULL;
+        budgetManager = NULL;
     };
 
-/*~BudgetApp()
+~BudgetApp()
      {
          delete budgetManager;
          budgetManager = NULL;
-     };*/
+     };
+
     char selectMainMenuOption();
     void registerUser();
     void logInUser();
