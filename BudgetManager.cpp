@@ -5,7 +5,7 @@ int BudgetManager::getNewOperationId(const Type &type)
     switch(type)
     {
     case INCOME:
-        if (incomes.empty() == true)
+        if (incomesFile.getLastId() < 1)
         {
             return 1;
         }
@@ -16,7 +16,7 @@ int BudgetManager::getNewOperationId(const Type &type)
         break;
 
     case EXPENSE:
-        if (expenses.empty() == true)
+        if (expensesFile.getLastId() < 1)
         {
             return 1;
         }
@@ -99,7 +99,9 @@ Operation BudgetManager::addOperationDetails(const Type &type)
 
     system("cls");
     cout << "Czy na pewno chcesz dodac " << operationType << "?" << endl;
-    cout << "Data: " << operation.date << endl << "Opis: " << operation.item << endl << "Wartosc: " << operation.amount << endl << endl;
+    cout << "Data: " << operation.date << endl;
+    cout << "Opis: " << operation.item << endl;
+    cout << "Wartosc: " << Utils::convertFloatToString(operation.amount) << endl << endl;
     cout << "Aby potwierdzic wprowadz t lub T, aby anulowac inny dowolny znak." << endl;
     choice = Utils::loadChar();
     if(choice != 't' && choice != 'T')
