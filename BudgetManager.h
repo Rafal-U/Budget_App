@@ -11,23 +11,25 @@ using namespace std;
 
 class BudgetManager
 {
-    //OperationsFile incomesFile;
-    //OperationFile expensesFile;
+    OperationsFile incomesFile;
+    OperationsFile expensesFile;
     const int LOGGED_USER_ID;
     vector<Operation> expenses;
     vector<Operation> incomes;
     char selectOptionFromAddingOperationMenu();
     Operation addOperationDetails(const Type &type);
+    int getNewOperationId(const Type &type);
     //float calculateTotalIncomesFromATimePeriod();
     //float calculateTotalExpensesFromATimePeriod();
     //float calculateTotalBalance();
     //void sortOperationsByDate();
 
 public:
-    BudgetManager(/*string incomeFileName, string expenseFileName*/ int loggedUserId) : LOGGED_USER_ID(loggedUserId)
+    BudgetManager(string incomeFileName, string expenseFileName, int loggedUserId)
+    : incomesFile(incomeFileName), expensesFile(expenseFileName),  LOGGED_USER_ID(loggedUserId)
     {
-        //incomes = loadOperationsFromFile(LOGGED_USER_ID);
-        //expenses = loadOperationsFromFile(LOGGED_USER_ID);
+        incomes = incomesFile.loadOperationsFromFile(LOGGED_USER_ID);
+        expenses = expensesFile.loadOperationsFromFile(LOGGED_USER_ID);
     };
     void addOperation(const Type &type);
     //void showOperationsFromATimePeriod(string startDate, string endDate);

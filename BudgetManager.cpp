@@ -1,5 +1,34 @@
 #include "BudgetManager.h"
 
+int BudgetManager::getNewOperationId(const Type &type)
+{
+    switch(type)
+    {
+    case INCOME:
+        if (incomesFile.getLastId() < 1)
+        {
+            return 1;
+        }
+        else
+        {
+            return incomesFile.getLastId() + 1;
+        }
+        break;
+
+    case EXPENSE:
+        if (expensesFile.getLastId() < 1)
+        {
+            return 1;
+        }
+        else
+        {
+            return expensesFile.getLastId() + 1;
+        }
+        break;
+    }
+}
+
+
 void BudgetManager::addOperation(const Type &type)
 {
     Operation singleOperation;
@@ -10,11 +39,11 @@ void BudgetManager::addOperation(const Type &type)
         {
         case INCOME:
             incomes.push_back(singleOperation);
-            //PLIK
+            incomesFile.addOperationToFile(singleOperation, type);
             cout << "Pozytywnie dodano przychod." << endl; Sleep(3000); break;
         case EXPENSE:
             expenses.push_back(singleOperation);
-            //PLIK
+            expensesFile.addOperationToFile(singleOperation, type);
             cout << "Pozytywnie dodano wydatek." << endl; Sleep(3000); break;
         }
     }
@@ -29,11 +58,14 @@ Operation BudgetManager::addOperationDetails(const Type &type)
     switch (type)
     {
     case INCOME:
-        operationType = "przychod"; break;
+        operationType = "przychod";
+        operation.operationId = getNewOperationId(type);
+        break;
 
     case EXPENSE:
-        operationType = "wydatek"; break;
-
+        operationType = "wydatek";
+        operation.operationId = getNewOperationId(type);
+        break;
     }
     operation.userId = LOGGED_USER_ID;
 
@@ -61,13 +93,15 @@ Operation BudgetManager::addOperationDetails(const Type &type)
 
     system("cls");
     cout << "Aby anulowac wcisnij 0 i potwierdz" << endl;
-    cout << "Wprowadz kwote " << operationType << ":" << endl;
+    cout << "Wprowadz kwote:" << endl;
     operation.amount = Utils::loadFloat();
     if(operation.amount == 0){return operation;}
 
     system("cls");
     cout << "Czy na pewno chcesz dodac " << operationType << "?" << endl;
-    cout << "Data: " << operation.date << endl << "Opis: " << operation.item << endl << "Wartosc: " << operation.amount << endl << endl;
+    cout << "Data: " << operation.date << endl;
+    cout << "Opis: " << operation.item << endl;
+    cout << "Wartosc: " << Utils::convertFloatToString(operation.amount) << endl << endl;
     cout << "Aby potwierdzic wprowadz t lub T, aby anulowac inny dowolny znak." << endl;
     choice = Utils::loadChar();
     if(choice != 't' && choice != 'T')

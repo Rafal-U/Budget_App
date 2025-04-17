@@ -47,7 +47,7 @@ float Utils::convertStringToFloat(string number)
 string Utils::convertFloatToString(float value)
 {
     ostringstream ss;
-    ss << value;
+    ss << fixed << setprecision(2) << value;
     return ss.str();
 }
 
