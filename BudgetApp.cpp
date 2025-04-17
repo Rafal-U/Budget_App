@@ -48,7 +48,7 @@ void BudgetApp::logInUser()
     userManager.signInUser();
     if(userManager.isUserLoggedIn())
     {
-        budgetManager = new BudgetManager(/*string incomeFileName, string expenseFileName,*/ userManager.getLoggedInUserId());
+        budgetManager = new BudgetManager(INCOMES_FILE_NAME, EXPENSES_FILE_NAME, userManager.getLoggedInUserId());
     }
 }
 
