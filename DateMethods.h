@@ -19,10 +19,11 @@ class DateMethods
 public:
     static Date getCurrentLokalDateFromSystem();
     static int loadDate();
+    static int convertStructDateToIntegerDate(Date date);
     static bool findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate);
     static bool findLastMonthDates(int checkDate);
     static bool findThisMonthDates(int checkDate);
-    static int convertStructDateToIntegerDate(Date date);
+    static string convertIntegerDateToStringLine(int dateValue);
 };
 
 #endif

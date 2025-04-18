@@ -30,7 +30,7 @@ void OperationsFile::addOperationToFile(Operation singleOperation, const Type &t
     xmlDoc.AddElem("UserID", singleOperation.userId);
     xmlDoc.AddElem("Date", singleOperation.date);
     xmlDoc.AddElem("Item", singleOperation.item);
-    xmlDoc.AddElem("Amount", Utils::convertFloatToString(singleOperation.amount));
+    xmlDoc.AddElem("Amount", Utils::convertDoubleToString(singleOperation.amount));
 
     xmlDoc.Save(fileTitle);
 }
@@ -58,7 +58,7 @@ vector<Operation> OperationsFile::loadOperationsFromFile(const int loggedUserId)
                 xmlDoc.FindElem("Item");
                 singleOperation.item = xmlDoc.GetData();
                 xmlDoc.FindElem("Amount");
-                singleOperation.amount = Utils::convertStringToFloat(xmlDoc.GetData());
+                singleOperation.amount = Utils::convertStringToDouble(xmlDoc.GetData());
                 allOperations.push_back(singleOperation);
             }
             xmlDoc.OutOfElem();

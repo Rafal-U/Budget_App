@@ -37,14 +37,13 @@ int Utils::convertStringToInteger(string number)
 }
 
 
-float Utils::convertStringToFloat(string number)
+double Utils::convertStringToDouble(string number)
 {
-    float value = (float)atof(number.c_str());
-    return value;
+    return stod(number);
 }
 
 
-string Utils::convertFloatToString(float value)
+string Utils::convertDoubleToString(double value)
 {
     ostringstream ss;
     ss << fixed << setprecision(2) << value;
@@ -109,9 +108,9 @@ int Utils::loadInteger()
 }
 
 
-float Utils::loadFloat()
+double Utils::loadDouble()
 {
-    float value = 0.0;
+    double value = 0.0;
     string line = "";
 
     while(true)
@@ -120,7 +119,7 @@ float Utils::loadFloat()
         line = changeComaToDot(line);
         if(isFloatOrDoubleFormGood(line))
         {
-            value = convertStringToFloat(line);
+            value = convertStringToDouble(line);
             return value;
         }
         else

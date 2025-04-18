@@ -94,14 +94,14 @@ Operation BudgetManager::addOperationDetails(const Type &type)
     system("cls");
     cout << "Aby anulowac wcisnij 0 i potwierdz" << endl;
     cout << "Wprowadz kwote:" << endl;
-    operation.amount = Utils::loadFloat();
+    operation.amount = Utils::loadDouble();
     if(operation.amount == 0){return operation;}
 
     system("cls");
     cout << "Czy na pewno chcesz dodac " << operationType << "?" << endl;
     cout << "Data: " << operation.date << endl;
     cout << "Opis: " << operation.item << endl;
-    cout << "Wartosc: " << Utils::convertFloatToString(operation.amount) << endl << endl;
+    cout << "Wartosc: " << Utils::convertDoubleToString(operation.amount) << endl << endl;
     cout << "Aby potwierdzic wprowadz t lub T, aby anulowac inny dowolny znak." << endl;
     choice = Utils::loadChar();
     if(choice != 't' && choice != 'T')
@@ -137,5 +137,54 @@ void BudgetManager::showVector()
     {
         cout << expenses[i].operationId <<"|"<< expenses[i].userId <<"|"<< expenses[i].date <<"|"<< expenses[i].item <<"|"<< expenses[i].amount <<endl;
     }
+    system("pause");
+}
+
+
+bool BudgetManager::compareOperationsByDate(const Operation &a, const Operation &b)
+{
+    return a.date < b.date;
+}
+
+
+void BudgetManager::showOperationsFromATimePeriod(bool goodDate)
+{
+    system("cls");
+    double totalIncomes = 0, totalExpenses = 0, totalBalance = 0;
+
+    sort(incomes.begin(), incomes.end(), BudgetManager::compareOperationsByDate);
+    sort(expenses.begin(), expenses.end(), BudgetManager::compareOperationsByDate);
+
+    cout << "PRZYCHODY" << endl;
+    for(int i = 0; i < incomes.size(); i++)
+    {
+        if(goodDate)
+        {
+            cout << "<<<< " << i << " >>>>" << endl;
+            cout << "Data:      " << DateMethods::convertIntegerDateToStringLine(incomes[i].date) << endl;
+            cout << "Wartosc:   " << incomes[i].amount << endl;
+            cout << "Opis:      " << incomes[i].item << endl;
+            totalIncomes += incomes[i].amount;
+        }
+
+    }
+    cout << "-------------------------------" << endl << "WYDATKI" << endl;
+    for(int i = 0; i < expenses.size(); i++)
+    {
+        if(goodDate)
+        {
+            cout << "<<<< " << i << " >>>>" << endl;
+            cout << "Data:      " << DateMethods::convertIntegerDateToStringLine(expenses[i].date) << endl;
+            cout << "Wartosc:   " << expenses[i].amount << endl;
+            cout << "Opis:      " << expenses[i].item << endl;
+            totalExpenses += expenses[i].amount;
+        }
+    }
+
+    totalBalance = totalIncomes - totalExpenses;
+    cout << "-------------------------------" << endl;
+    cout << "Suma przychodow:  " << totalIncomes << endl;
+    cout << "Suma wydatkow:    " << totalExpenses << endl;
+    cout << "Bilans calkowity: " << totalBalance << endl;
     system("pause");
 }

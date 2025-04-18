@@ -1,6 +1,7 @@
 #ifndef BUDGETMANAGER_H
 #define BUDGETMANAGER_H
 #include <iostream>
+#include <algorithm>
 #include "Operation.h"
 #include "OperationsFile.h"
 #include "UserManager.h"
@@ -19,10 +20,7 @@ class BudgetManager
     char selectOptionFromAddingOperationMenu();
     Operation addOperationDetails(const Type &type);
     int getNewOperationId(const Type &type);
-    //float calculateTotalIncomesFromATimePeriod();
-    //float calculateTotalExpensesFromATimePeriod();
-    //float calculateTotalBalance();
-    //void sortOperationsByDate();
+    bool compareOperationsByDate(const Operation &a, const Operation &b);
 
 public:
     BudgetManager(string incomeFileName, string expenseFileName, int loggedUserId)
@@ -32,7 +30,7 @@ public:
         expenses = expensesFile.loadOperationsFromFile(LOGGED_USER_ID);
     };
     void addOperation(const Type &type);
-    //void showOperationsFromATimePeriod(string startDate, string endDate);
+    void showOperationsFromATimePeriod(bool goodDate);
 
     void showVector();
 };

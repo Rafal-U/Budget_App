@@ -188,3 +188,12 @@ int DateMethods::loadDate()
         }
     }
 }
+
+
+string DateMethods::convertIntegerDateToStringLine(int dateValue)
+{
+    string date = "", formattedDate = "";
+    date = Utils::convertIntegerToString(dateValue);
+    formattedDate = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6, 2);
+    return formattedDate;
+}

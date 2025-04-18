@@ -7,5 +7,5 @@ struct Operation
     int userId;
     int date;
     string item;
-    float amount;
+    double amount;
 };
