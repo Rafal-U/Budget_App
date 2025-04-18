@@ -30,7 +30,8 @@ public:
         expenses = expensesFile.loadOperationsFromFile(LOGGED_USER_ID);
     };
     void addOperation(const Type &type);
-    void showOperationsFromATimePeriod(bool goodDate);
+    double showOperationsFromATimePeriod(int startDate, int endDate, const Type &type);
+    void showBalanceFromTimePeriod(int fromDate, int toDate);
 
     void showVector();
 };

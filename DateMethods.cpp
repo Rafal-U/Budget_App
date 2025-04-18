@@ -117,9 +117,9 @@ Date DateMethods::getCurrentLokalDateFromSystem()
 }
 
 
-bool DateMethods::findLastMonthDates(int checkDate)
+int DateMethods::getPreviousMonthLastDate()
 {
-    int lastDayOfMonthDate = 0, firstDayOfMonthDate = 0;
+    int lastDayOfMonthDate = 0;
     Date currentDate, lastMonthDate;
     currentDate = getCurrentLokalDateFromSystem();
 
@@ -137,19 +137,26 @@ bool DateMethods::findLastMonthDates(int checkDate)
     }
 
     lastDayOfMonthDate = convertStructDateToIntegerDate(lastMonthDate);
-    firstDayOfMonthDate = lastDayOfMonthDate - lastMonthDate.day + 1;
-    return findSelectedTimePeriodDates(firstDayOfMonthDate, lastDayOfMonthDate, checkDate);
+    return lastDayOfMonthDate;
+}
+
+int DateMethods::getPreviousMonthFirstDayDate()
+{
+    int firstDayOfMonthDate = 0, lastDayOfMonthDate = 0;
+    lastDayOfMonthDate = getPreviousMonthFirstDayDate();
+    firstDayOfMonthDate = lastDayOfMonthDate - (lastDayOfMonthDate % 1000000) + 1;
+    return firstDayOfMonthDate;
 }
 
 
-bool DateMethods::findThisMonthDates(int checkDate)
+int DateMethods::getCurrentMonthFirstDate()
 {
-    int todayDate = 0, firstDayOfMonthDate = 0;
+    int firstDayOfMonthDate = 0;
     Date currentDate;
     currentDate = getCurrentLokalDateFromSystem();
-    todayDate = convertStructDateToIntegerDate(currentDate);
-    firstDayOfMonthDate = todayDate - currentDate.day + 1;
-    return findSelectedTimePeriodDates(firstDayOfMonthDate, todayDate, checkDate);
+    currentDate.day = 1;
+    firstDayOfMonthDate = DateMethods::convertStructDateToIntegerDate(currentDate);
+    return firstDayOfMonthDate;
 }
 
 

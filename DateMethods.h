@@ -21,8 +21,9 @@ public:
     static int loadDate();
     static int convertStructDateToIntegerDate(Date date);
     static bool findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate);
-    static bool findLastMonthDates(int checkDate);
-    static bool findThisMonthDates(int checkDate);
+    static int getPreviousMonthLastDate();
+    static int getPreviousMonthFirstDayDate();
+    static int getCurrentMonthFirstDate();
     static string convertIntegerDateToStringLine(int dateValue);
 };
 
