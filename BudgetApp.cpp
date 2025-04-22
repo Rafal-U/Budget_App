@@ -27,12 +27,11 @@ void BudgetApp::manageUserOptions()
             case '1': budgetManager ->addOperation(INCOME); break;
             case '2': budgetManager ->addOperation(EXPENSE); break;
             case '3': budgetManager ->showBalanceFromTimePeriod
-            (
-             DateMethods::getCurrentMonthFirstDate(),
-             DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem())
-            ); break;
+            (DateMethods::getCurrentMonthFirstDate(), DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem())); break;
             case '4': budgetManager ->showBalanceFromTimePeriod(DateMethods::getPreviousMonthFirstDayDate(), DateMethods::getPreviousMonthLastDate()); break;
-            //case '5': budgetManager -> break;
+            case '5':
+                cout << "Podaj daty wybranego okresu: od, do." << endl;
+                budgetManager ->showBalanceFromTimePeriod(DateMethods::loadDate(), DateMethods::loadDate()); break;
             case '6': userManager.changePasswordOfLoggedInUser(); break;
             case '7': userManager.signOutUser(); break;
             default: cout << endl << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);

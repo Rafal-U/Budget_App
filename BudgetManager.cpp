@@ -78,7 +78,6 @@ Operation BudgetManager::addOperationDetails(const Type &type)
     case '1':
         operation.date = DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem()); break;
     case '2':
-        cout << "Aby anulowac wcisnij 0 i potwierdz" << endl;
         operation.date = DateMethods::loadDate();
         if(operation.date == 0){return operation;} break;
     default:
@@ -192,12 +191,19 @@ void BudgetManager::showBalanceFromTimePeriod(int fromDate, int toDate)
     double totalIncomes = 0, totalExpenses = 0, totalBalance = 0;
 
     system("cls");
-    totalIncomes = showOperationsFromATimePeriod(fromDate, toDate, INCOME);
-    totalExpenses = showOperationsFromATimePeriod(fromDate, toDate, EXPENSE);
-    totalBalance =  totalIncomes - totalExpenses;
+    if(fromDate <= toDate && fromDate > 0 && toDate > 0)
+    {
+        totalIncomes = showOperationsFromATimePeriod(fromDate, toDate, INCOME);
+        totalExpenses = showOperationsFromATimePeriod(fromDate, toDate, EXPENSE);
+        totalBalance =  totalIncomes - totalExpenses;
 
-    cout << "Suma przychodow:  " << totalIncomes << endl;
-    cout << "Suma wydatkow:    " << totalExpenses << endl;
-    cout << "Bilans calkowity: " << totalBalance << endl;
+        cout << "Suma przychodow:  " << totalIncomes << endl;
+        cout << "Suma wydatkow:    " << totalExpenses << endl;
+        cout << "Bilans calkowity: " << totalBalance << endl;
+    }
+    if(fromDate > toDate && fromDate > 0 && toDate > 0)
+    {
+        cout << "Data rozpoczecia wyszukiwania jest wieksza od daty koncowej!" << endl;
+    }
     system("pause");
 }

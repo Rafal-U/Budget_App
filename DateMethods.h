@@ -14,7 +14,6 @@ class DateMethods
     static bool isDateFormatGood(string dateLine);
     static bool isIntegerDateGood(int dateValue);
     static bool isSingleDateGood(Date singleDate);
-    static bool isTimePeriodGood(int startDate, int endDate);
 
 public:
     static Date getCurrentLokalDateFromSystem();

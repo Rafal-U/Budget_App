@@ -84,17 +84,6 @@ bool DateMethods::isIntegerDateGood(int dateValue)
     }
 }
 
-
-bool DateMethods::isTimePeriodGood(int startDate, int endDate)
-{
-    if(startDate > endDate)
-    {
-        return false;
-    }
-    return true;
-}
-
-
 bool DateMethods::findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate)
 {
     if(checkDate >= fromDate && checkDate <= toDate)
@@ -143,8 +132,8 @@ int DateMethods::getPreviousMonthLastDate()
 int DateMethods::getPreviousMonthFirstDayDate()
 {
     int firstDayOfMonthDate = 0, lastDayOfMonthDate = 0;
-    lastDayOfMonthDate = getPreviousMonthFirstDayDate();
-    firstDayOfMonthDate = lastDayOfMonthDate - (lastDayOfMonthDate % 1000000) + 1;
+    lastDayOfMonthDate = getPreviousMonthLastDate();
+    firstDayOfMonthDate = lastDayOfMonthDate - (lastDayOfMonthDate % 100) + 1;
     return firstDayOfMonthDate;
 }
 
@@ -172,11 +161,19 @@ int DateMethods::loadDate()
 {
     int dateValue = 0;
     string dateDashLine = "";
+
+    cout << "Wprowadz date w formacie RRRR-MM-DD" << endl;
+    cout << "Aby anulowac wcisnij wprowadz 0 i potwierdz" << endl;
     while(true)
     {
-        system("cls");
-        cout << "Wprowadz date w formacie RRRR-MM-DD" << endl;
+        //system("cls");
         dateDashLine = Utils::loadLine();
+
+        if(dateDashLine == "0")
+        {
+            return 0;
+        }
+
         if(isDateFormatGood(dateDashLine))
         {
             dateValue = convertStringDateToIntegerLine(dateDashLine);
