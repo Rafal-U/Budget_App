@@ -24,11 +24,12 @@ void BudgetApp::manageUserOptions()
         choice = userManager.selectUserMenuOption();
         switch(choice)
         {
-            case '1': ; break;
-            case '2': ; break;
-            case '3': ; break;
-            case '4': ; break;
-            case '5': ; break;
+            case '1': budgetManager ->addOperation(INCOME); break;
+            case '2': budgetManager ->addOperation(EXPENSE); break;
+            case '3': budgetManager ->showBalanceFromTimePeriod
+            (DateMethods::getCurrentMonthFirstDate(), DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem())); break;
+            case '4': budgetManager ->showBalanceFromTimePeriod(DateMethods::getPreviousMonthFirstDayDate(), DateMethods::getPreviousMonthLastDate()); break;
+            case '5': budgetManager ->selectTimePeriodAndShowBalance(); break;
             case '6': userManager.changePasswordOfLoggedInUser(); break;
             case '7': userManager.signOutUser(); break;
             default: cout << endl << "Nie ma takiej opcji! Wybierz ponownie!" << endl; Sleep(3000);
@@ -46,9 +47,8 @@ void BudgetApp::registerUser()
 void BudgetApp::logInUser()
 {
     userManager.signInUser();
-}
-
-void BudgetApp::showUsers()
-{
-    userManager.showUsers(); system("pause");
+    if(userManager.isUserLoggedIn())
+    {
+        budgetManager = new BudgetManager(INCOMES_FILE_NAME, EXPENSES_FILE_NAME, userManager.getLoggedInUserId());
+    }
 }

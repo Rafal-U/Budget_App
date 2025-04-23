@@ -27,14 +27,13 @@ public:
         loggedInUserId = 0;
         users = userFile.loadUsersFromFile();
     };
+    int getLoggedInUserId();
     char selectUserMenuOption();
     void registerUser();
     void signInUser();
     void changePasswordOfLoggedInUser();
     bool isUserLoggedIn();
     void signOutUser();
-
-    void showUsers();
 };
 
 #endif

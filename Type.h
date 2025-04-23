@@ -1,6 +1,6 @@
 #pragma once
 
 enum Type{
-INCOME
+INCOME,
 EXPENSE
 };

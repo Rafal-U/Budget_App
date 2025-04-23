@@ -1,5 +1,11 @@
 #include "UserManager.h"
 
+int UserManager::getLoggedInUserId()
+{
+    return loggedInUserId;
+}
+
+
 char UserManager::selectUserMenuOption()
 {
     char option;
@@ -312,14 +318,5 @@ void UserManager::changePasswordOfLoggedInUser()
                 return;
             }
         }
-    }
-}
-
-
-void UserManager::showUsers()
-{
-    for (size_t i = 0; i < users.size(); i++)
-    {
-        cout << users[i].userId << endl << users[i].login << endl << users[i].password << endl << users[i].name << endl << users[i].surname << endl << endl;
     }
 }

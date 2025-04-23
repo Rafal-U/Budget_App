@@ -2,7 +2,7 @@
 
 void UserFile::addUserToFile(User user)
 {
-    if (!fileExist("Users.xml"))
+    if (!fileExist(getFileName()))
     {
         xmlDoc.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xmlDoc.AddElem("USERS");
@@ -17,7 +17,7 @@ void UserFile::addUserToFile(User user)
     xmlDoc.AddElem("Name", user.name);
     xmlDoc.AddElem("Surname", user.surname);
 
-    xmlDoc.Save("Users.xml");
+    xmlDoc.Save(getFileName());
 }
 
 
@@ -25,7 +25,7 @@ vector<User> UserFile::loadUsersFromFile()
 {
     vector<User> allUsers;
     User singleUser;
-    if(fileExist("Users.xml"))
+    if(fileExist(getFileName()))
     {
         xmlDoc.FindElem("USERS");
         xmlDoc.IntoElem();
@@ -51,7 +51,7 @@ vector<User> UserFile::loadUsersFromFile()
 
 void UserFile::changePasswortInFile(int id, string newPassword)
 {
-    if(fileExist("Users.xml"))
+    if(fileExist(getFileName()))
     {
         xmlDoc.FindElem("USERS");
         xmlDoc.IntoElem();
@@ -67,27 +67,6 @@ void UserFile::changePasswortInFile(int id, string newPassword)
                 xmlDoc.OutOfElem(); break;
             }
         }
-        xmlDoc.Save("Users.xml");
+        xmlDoc.Save(getFileName());
     }
-}
-
-
-int File::getLastId()
-{
-    int currentID = 0, lastId = 0;
-
-    if(fileExist("Users.xml"))
-    {
-        xmlDoc.FindElem("USERS");
-        xmlDoc.IntoElem();
-        while(xmlDoc.FindElem("User"))
-        {
-            currentID = Utils::convertStringToInteger(xmlDoc.GetAttrib("ID"));
-            if(currentID > lastId)
-            {
-                lastId = currentID;
-            }
-        }
-    }
-    return lastId;
 }

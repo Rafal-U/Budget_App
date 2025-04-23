@@ -35,8 +35,9 @@ int DateMethods::getDaysInAMonth(int month, int year)
 
 bool DateMethods::isSingleDateGood(Date singleDate)
 {
-    if(singleDate.year < 2000
+    if(singleDate.year < 2000 || singleDate.year > getCurrentLokalDateFromSystem().year
        || singleDate.month > 12 || singleDate.month < 1
+       || (singleDate.month > getCurrentLokalDateFromSystem().month && singleDate.year == getCurrentLokalDateFromSystem().year)
        || singleDate.day < 1 || singleDate.day > getDaysInAMonth(singleDate.month, singleDate.year))
     {
         return false;
@@ -79,20 +80,9 @@ bool DateMethods::isIntegerDateGood(int dateValue)
         {
             return true;
         }
-        return false;
     }
+    return false;
 }
-
-
-bool DateMethods::isTimePeriodGood(int startDate, int endDate)
-{
-    if(startDate > endDate)
-    {
-        return false;
-    }
-    return true;
-}
-
 
 bool DateMethods::findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate)
 {
@@ -116,9 +106,9 @@ Date DateMethods::getCurrentLokalDateFromSystem()
 }
 
 
-bool DateMethods::findLastMonthDates(int checkDate)
+int DateMethods::getPreviousMonthLastDate()
 {
-    int lastDayOfMonthDate = 0, firstDayOfMonthDate = 0;
+    int lastDayOfMonthDate = 0;
     Date currentDate, lastMonthDate;
     currentDate = getCurrentLokalDateFromSystem();
 
@@ -136,19 +126,26 @@ bool DateMethods::findLastMonthDates(int checkDate)
     }
 
     lastDayOfMonthDate = convertStructDateToIntegerDate(lastMonthDate);
-    firstDayOfMonthDate = lastDayOfMonthDate - lastMonthDate.day + 1;
-    return findSelectedTimePeriodDates(firstDayOfMonthDate, lastDayOfMonthDate, checkDate);
+    return lastDayOfMonthDate;
+}
+
+int DateMethods::getPreviousMonthFirstDayDate()
+{
+    int firstDayOfMonthDate = 0, lastDayOfMonthDate = 0;
+    lastDayOfMonthDate = getPreviousMonthLastDate();
+    firstDayOfMonthDate = lastDayOfMonthDate - (lastDayOfMonthDate % 100) + 1;
+    return firstDayOfMonthDate;
 }
 
 
-bool DateMethods::findThisMonthDates(int checkDate)
+int DateMethods::getCurrentMonthFirstDate()
 {
-    int todayDate = 0, firstDayOfMonthDate = 0;
+    int firstDayOfMonthDate = 0;
     Date currentDate;
     currentDate = getCurrentLokalDateFromSystem();
-    todayDate = convertStructDateToIntegerDate(currentDate);
-    firstDayOfMonthDate = todayDate - currentDate.day + 1;
-    return findSelectedTimePeriodDates(firstDayOfMonthDate, todayDate, checkDate);
+    currentDate.day = 1;
+    firstDayOfMonthDate = DateMethods::convertStructDateToIntegerDate(currentDate);
+    return firstDayOfMonthDate;
 }
 
 
@@ -164,11 +161,18 @@ int DateMethods::loadDate()
 {
     int dateValue = 0;
     string dateDashLine = "";
+
+    cout << "Wprowadz date w formacie RRRR-MM-DD" << endl;
+    cout << "Aby anulowac wcisnij wprowadz 0 i potwierdz" << endl;
     while(true)
     {
-        system("cls");
-        cout << "Wprowadz date w formacie RRRR-MM-DD" << endl;
         dateDashLine = Utils::loadLine();
+
+        if(dateDashLine == "0")
+        {
+            return 0;
+        }
+
         if(isDateFormatGood(dateDashLine))
         {
             dateValue = convertStringDateToIntegerLine(dateDashLine);
@@ -186,4 +190,13 @@ int DateMethods::loadDate()
             cout << "Zly format daty! Wpisz ponownie." << endl; system("pause");
         }
     }
+}
+
+
+string DateMethods::convertIntegerDateToStringLine(int dateValue)
+{
+    string date = "", formattedDate = "";
+    date = Utils::convertIntegerToString(dateValue);
+    formattedDate = date.substr(6, 2) + "." + date.substr(4, 2) + "." + date.substr(0, 4);
+    return formattedDate;
 }

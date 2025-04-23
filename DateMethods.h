@@ -12,17 +12,18 @@ class DateMethods
     static int convertStringDateToIntegerLine(string dateLine);
     static bool isLeapYear(int year);
     static bool isDateFormatGood(string dateLine);
-    static bool isIntegerDateGood(int dateValue);
     static bool isSingleDateGood(Date singleDate);
-    static bool isTimePeriodGood(int startDate, int endDate);
-    static int convertStructDateToIntegerDate(Date date);
 
 public:
+    static bool findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate);
+    static bool isIntegerDateGood(int dateValue);
     static Date getCurrentLokalDateFromSystem();
     static int loadDate();
-    static bool findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate);
-    static bool findLastMonthDates(int checkDate);
-    static bool findThisMonthDates(int checkDate);
+    static int convertStructDateToIntegerDate(Date date);
+    static int getPreviousMonthLastDate();
+    static int getPreviousMonthFirstDayDate();
+    static int getCurrentMonthFirstDate();
+    static string convertIntegerDateToStringLine(int dateValue);
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 
 class Utils
@@ -11,13 +12,13 @@ class Utils
 public:
     static string convertIntegerToString(int number);
     static int convertStringToInteger(string number);
-    static float convertStringToFloat(string number);
-    static string convertFloatToString(float number);
+    static double convertStringToDouble(string number);
+    static string convertDoubleToString(double number);
     static string changeFirstLetterForUpperCaseAndOthersForLowerCase(string text);
     static string loadLine();
     static char loadChar();
     static int loadInteger();
-    static float loadFloat();
+    static double loadDouble();
     static string changeComaToDot(string wordToChange);
 };
 
