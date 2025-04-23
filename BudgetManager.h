@@ -20,7 +20,7 @@ class BudgetManager
     char selectOptionFromAddingOperationMenu();
     Operation addOperationDetails(const Type &type);
     int getNewOperationId(const Type &type);
-    bool compareOperationsByDate(const Operation &a, const Operation &b);
+    static bool compareOperationsByDate(const Operation &a, const Operation &b);
 
 public:
     BudgetManager(string incomeFileName, string expenseFileName, int loggedUserId)
@@ -32,8 +32,7 @@ public:
     void addOperation(const Type &type);
     double showOperationsFromATimePeriod(int startDate, int endDate, const Type &type);
     void showBalanceFromTimePeriod(int fromDate, int toDate);
-
-    void showVector();
+    void selectTimePeriodAndShowBalance();
 };
 
 

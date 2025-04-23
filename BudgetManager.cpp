@@ -98,7 +98,7 @@ Operation BudgetManager::addOperationDetails(const Type &type)
 
     system("cls");
     cout << "Czy na pewno chcesz dodac " << operationType << "?" << endl;
-    cout << "Data: " << operation.date << endl;
+    cout << "Data: " << DateMethods::convertIntegerDateToStringLine(operation.date) << endl;
     cout << "Opis: " << operation.item << endl;
     cout << "Wartosc: " << Utils::convertDoubleToString(operation.amount) << endl << endl;
     cout << "Aby potwierdzic wprowadz t lub T, aby anulowac inny dowolny znak." << endl;
@@ -122,24 +122,6 @@ char BudgetManager::selectOptionFromAddingOperationMenu()
 }
 
 
-void BudgetManager::showVector()
-{
-    system("cls");
-    cout << "ID|UserID|Data|Opis|Wartosc" << endl;
-    cout << endl << "PRZYCHODY" << endl;
-    for(int i = 0; i < incomes.size(); i++)
-    {
-        cout << incomes[i].operationId <<"|"<< incomes[i].userId <<"|"<< incomes[i].date <<"|"<< incomes[i].item <<"|"<< incomes[i].amount <<endl;
-    }
-    cout << endl << "WYDATKI" << endl;
-    for(int i = 0; i < expenses.size(); i++)
-    {
-        cout << expenses[i].operationId <<"|"<< expenses[i].userId <<"|"<< expenses[i].date <<"|"<< expenses[i].item <<"|"<< expenses[i].amount <<endl;
-    }
-    system("pause");
-}
-
-
 bool BudgetManager::compareOperationsByDate(const Operation &a, const Operation &b)
 {
     return a.date < b.date;
@@ -152,6 +134,7 @@ double BudgetManager::showOperationsFromATimePeriod(int startDate, int endDate, 
     string title = "", totalTitle = "";
     double total = 0;
     bool goodDate = true;
+    int operationCount = 0;
 
     switch(type)
     {
@@ -165,7 +148,7 @@ double BudgetManager::showOperationsFromATimePeriod(int startDate, int endDate, 
         title = "WYDATKI";
         break;
     }
-    //sort(operations.begin(), operations.end(), compareOperationsByDate);
+    sort(operations.begin(), operations.end(), BudgetManager::compareOperationsByDate);
 
     cout << title << endl;
     for(int i = 0; i < operations.size(); i++)
@@ -173,7 +156,8 @@ double BudgetManager::showOperationsFromATimePeriod(int startDate, int endDate, 
         goodDate = DateMethods::findSelectedTimePeriodDates(startDate, endDate, operations[i].date);
         if(goodDate)
         {
-            cout << "<<<< " << i << " >>>>" << endl;
+            operationCount++;
+            cout << "<<<< " << operationCount << " >>>>" << endl;
             cout << "Data:      " << DateMethods::convertIntegerDateToStringLine(operations[i].date) << endl;
             cout << "Wartosc:   " << operations[i].amount << endl;
             cout << "Opis:      " << operations[i].item << endl << endl;
@@ -191,7 +175,7 @@ void BudgetManager::showBalanceFromTimePeriod(int fromDate, int toDate)
     double totalIncomes = 0, totalExpenses = 0, totalBalance = 0;
 
     system("cls");
-    if(fromDate <= toDate && fromDate > 0 && toDate > 0)
+    if(fromDate <= toDate && DateMethods::isIntegerDateGood(fromDate) && DateMethods::isIntegerDateGood(toDate))
     {
         totalIncomes = showOperationsFromATimePeriod(fromDate, toDate, INCOME);
         totalExpenses = showOperationsFromATimePeriod(fromDate, toDate, EXPENSE);
@@ -200,10 +184,35 @@ void BudgetManager::showBalanceFromTimePeriod(int fromDate, int toDate)
         cout << "Suma przychodow:  " << totalIncomes << endl;
         cout << "Suma wydatkow:    " << totalExpenses << endl;
         cout << "Bilans calkowity: " << totalBalance << endl;
+        system("pause");
     }
-    if(fromDate > toDate && fromDate > 0 && toDate > 0)
+    else
+    {
+        cout << "Wystapil blad. Nastapi powrot do menu uzytkownika." << endl; Sleep(3000);
+    }
+}
+
+
+void BudgetManager::selectTimePeriodAndShowBalance()
+{
+    int startDate = 0, endDate = 0;
+    system("cls");
+    cout << "DATA POCZATKOWA WYBRANEGO OKRESU" << endl << endl;
+    startDate = DateMethods::loadDate();
+    if(startDate == 0) {return;}
+
+    cout << endl << "DATA KONCOWA WYBRANEGO OKRESU" << endl << endl;
+    endDate = DateMethods::loadDate();
+    if(endDate == 0) {return;}
+
+    if(startDate > endDate)
     {
         cout << "Data rozpoczecia wyszukiwania jest wieksza od daty koncowej!" << endl;
+        Sleep(2500);
     }
-    system("pause");
+
+    if(startDate <= endDate)
+    {
+        showBalanceFromTimePeriod(startDate, endDate);
+    }
 }

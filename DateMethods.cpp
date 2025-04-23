@@ -80,8 +80,8 @@ bool DateMethods::isIntegerDateGood(int dateValue)
         {
             return true;
         }
-        return false;
     }
+    return false;
 }
 
 bool DateMethods::findSelectedTimePeriodDates(int fromDate, int toDate, int checkDate)
@@ -166,7 +166,6 @@ int DateMethods::loadDate()
     cout << "Aby anulowac wcisnij wprowadz 0 i potwierdz" << endl;
     while(true)
     {
-        //system("cls");
         dateDashLine = Utils::loadLine();
 
         if(dateDashLine == "0")
@@ -198,6 +197,6 @@ string DateMethods::convertIntegerDateToStringLine(int dateValue)
 {
     string date = "", formattedDate = "";
     date = Utils::convertIntegerToString(dateValue);
-    formattedDate = date.substr(0, 4) + "." + date.substr(4, 2) + "." + date.substr(6, 2);
+    formattedDate = date.substr(6, 2) + "." + date.substr(4, 2) + "." + date.substr(0, 4);
     return formattedDate;
 }
