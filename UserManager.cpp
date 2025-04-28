@@ -37,7 +37,7 @@ void UserManager::registerUser()
         cout << "Nazwisko:   " << singleUser.surname << endl;
         cout << "Login:      " << singleUser.login << endl;
         cout << "Haslo:      " << singleUser.password << endl;
-        cout << "Aby potwierdzic dane wcisnij: t  lub inny dowolny znak, aby anulowac" << endl;
+        cout << "Aby potwierdzic dane wcisnij: t lub T. Inny dowolny znak, aby anulowac" << endl;
         confirm = Utils::loadChar();
         if(confirm == 't' || confirm == 'T')
         {

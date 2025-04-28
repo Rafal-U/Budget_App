@@ -163,7 +163,7 @@ int DateMethods::loadDate()
     string dateDashLine = "";
 
     cout << "Wprowadz date w formacie RRRR-MM-DD" << endl;
-    cout << "Aby anulowac wcisnij wprowadz 0 i potwierdz" << endl;
+    cout << "Aby anulowac wprowadz 0 i potwierdz" << endl;
     while(true)
     {
         dateDashLine = Utils::loadLine();

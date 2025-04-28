@@ -79,7 +79,15 @@ Operation BudgetManager::addOperationDetails(const Type &type)
         operation.date = DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem()); break;
     case '2':
         operation.date = DateMethods::loadDate();
-        if(operation.date == 0){return operation;} break;
+        if(operation.date > DateMethods::convertStructDateToIntegerDate(DateMethods::getCurrentLokalDateFromSystem()))
+        {
+            cout << "UWAGA! Wprowadzona data jest pozniejsza od dnia dzisiejszego." << endl;
+            cout << "Moze nie pojawic sie w wyszukiwaniu operacji z tego miesiaca!" << endl;
+            system("pause");
+        }
+        if(operation.date == 0){return operation;}
+        break;
+
     default:
         operation.date = 0; return operation;
     }
@@ -159,7 +167,7 @@ double BudgetManager::showOperationsFromATimePeriod(int startDate, int endDate, 
             operationCount++;
             cout << "<<<< " << operationCount << " >>>>" << endl;
             cout << "Data:      " << DateMethods::convertIntegerDateToStringLine(operations[i].date) << endl;
-            cout << "Wartosc:   " << operations[i].amount << endl;
+            cout << "Wartosc:   " << fixed << setprecision(2) << operations[i].amount << endl;
             cout << "Opis:      " << operations[i].item << endl << endl;
             total += operations[i].amount;
         }
@@ -181,6 +189,7 @@ void BudgetManager::showBalanceFromTimePeriod(int fromDate, int toDate)
         totalExpenses = showOperationsFromATimePeriod(fromDate, toDate, EXPENSE);
         totalBalance =  totalIncomes - totalExpenses;
 
+        cout << fixed << setprecision(2);
         cout << "Suma przychodow:  " << totalIncomes << endl;
         cout << "Suma wydatkow:    " << totalExpenses << endl;
         cout << "Bilans calkowity: " << totalBalance << endl;

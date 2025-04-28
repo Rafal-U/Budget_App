@@ -120,6 +120,7 @@ double Utils::loadDouble()
         if(isFloatOrDoubleFormGood(line))
         {
             value = convertStringToDouble(line);
+            value = round(value * 100.0) / 100.0;
             return value;
         }
         else
